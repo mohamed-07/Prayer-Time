@@ -168,7 +168,7 @@ const setupCountdownTimer = () =>{
           style={{color:"white"}}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          // value={age}
+          value={city.apiName}
           label="Age"
           onChange={handleCityChange}
         >
