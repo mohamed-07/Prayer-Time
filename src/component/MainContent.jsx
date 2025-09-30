@@ -76,7 +76,7 @@ export default function mainContent() {
     return () => {
       clearInterval(interval)
     }
-  },[city])
+  },[timings])
 
 const setupCountdownTimer = () =>{
     const momentNow = moment()
@@ -95,7 +95,7 @@ const setupCountdownTimer = () =>{
           prayerIndex = 3
 
       }else if(momentNow.isAfter(moment(timings["Maghrib"],"hh:mm")) 
-          && momentNow.isBefore(moment(timings["Icha"],"hh:mm"))){
+          && momentNow.isBefore(moment(timings["Isha"],"hh:mm"))){
           prayerIndex = 4
       }else {
         prayerIndex = 0
@@ -108,7 +108,7 @@ const setupCountdownTimer = () =>{
 
   let remainongTime = moment(nextPrayerTime,"hh:mm").diff(momentNow);
   
-  if(remainongTime > 0){
+  if(remainongTime < 0){
     const midnightDiff = moment("23:59:59","hh:mm:ss").diff(momentNow) 
     const fajerToMidnightDiff = nextPrayerTimeMoment.diff(moment("00:00:00","hh:mm:ss"))
     
@@ -136,7 +136,7 @@ const setupCountdownTimer = () =>{
     <Grid size={{ xs: 6 }}>
         <div>
             <h2>{today}</h2>
-            <h1>{city.displayName}</h1>
+            <h1> مواقيت الصلاة {city.displayName}</h1>
         </div>
     </Grid>
     <Grid size={{ xs: 6 }}>
@@ -150,11 +150,11 @@ const setupCountdownTimer = () =>{
     <Divider style={{borderColor:'white',opacity:'0.2'}} />
     {/* START PRAYERS CARDS */}
     <Stack direction="row" spacing={2} justifyContent={'space-around'} style={{marginTop:"25px"}}>
-        <PrayerCard name="الفجر" time={timings.Fajr}/>
-        <PrayerCard name="الظهر" time={timings.Dhuhr}/>
-        <PrayerCard name="العصر" time={timings.Asr}/>
-        <PrayerCard name="المغرب" time={timings.Maghrib}/>
-        <PrayerCard name="العشاء" time={timings.Isha}/>
+        <PrayerCard name="الفجر" time={timings.Fajr} isNext={nextPrayerIndex === 0}/>
+        <PrayerCard name="الظهر" time={timings.Dhuhr} isNext ={nextPrayerIndex === 1}/>
+        <PrayerCard name="العصر" time={timings.Asr} isNext ={nextPrayerIndex === 2}/>
+        <PrayerCard name="المغرب" time={timings.Maghrib} isNext ={nextPrayerIndex === 3}/>
+        <PrayerCard name="العشاء" time={timings.Isha} isNext ={nextPrayerIndex === 4}/>
     </Stack>
     {/* END PRAYERS CARDS */}
     {/* START SELECT CITY */}
